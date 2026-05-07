@@ -1,0 +1,7 @@
+@use '../utils/variables' as *; // Importation des variables
+@use '../utils/placeholders' as *;
+
+// Mobile first
+header {
+ background-color: rgb(239, 0, 0) !important;
+}
