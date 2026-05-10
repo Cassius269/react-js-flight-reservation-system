@@ -1,0 +1,13 @@
+.articleCityDestination {
+    position: relative;
+    .divCityPlusPrice {
+        background-color: black;
+        color: white;
+        padding: 1rem;
+        position: absolute;
+        bottom: 0;
+        i {
+            cursor: pointer;
+        }
+    }
+}

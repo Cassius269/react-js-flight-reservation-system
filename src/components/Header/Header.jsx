@@ -58,9 +58,9 @@ function Header() {
 
           <button
             onClick={handleClick}
-            className={`${isActive ? "d-none" : "d-block d-md-none"}`}
+            className={`${isActive ? "d-none" : "d-inline-block d-md-none mt-3"}`}
           >
-            <i className="bi bi-list fs-1"></i>
+            <i className="bi bi-list fs-2 border-none"></i>
           </button>
         </nav>
       </header>

@@ -7,12 +7,12 @@ article {
 
     [id="articleButtonKnowMore"] {
         border:none;
-        border-bottom: 2px solid $success;
-    }
-}
+        border-bottom: 2px solid green;
+        margin-left: 4rem;
+        @media screen and (width > 1290px) {
+            margin-left: 16rem;
 
-.sectionSellingPoints {
-    .sellingPointElement {
-        height: 270px;
-    }
+        }
+        transition: margin-left 1s ease-out;
+    } 
 }

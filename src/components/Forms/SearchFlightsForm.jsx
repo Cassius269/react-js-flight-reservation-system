@@ -9,6 +9,7 @@ function SearchFlightsForm() {
   const flightSchema = yup.object({
     from: yup
       .string()
+      .typeError("Format date obligatoire")
       .required("Point de départ obligatoire")
       .min(3, "Minimum 3 caractères"),
     to: yup
@@ -16,14 +17,21 @@ function SearchFlightsForm() {
       .required("Point d'arrivée obligatoire")
       .min(3, "Minimum 3 caractères"),
     dateDeparture: yup.date().required("Date de départ obligatoire"),
-    dateArrival: yup.date(),
+    dateArrival: yup
+      .date()
+      .nullable()
+      .transform((value, originalValue) => {
+        return originalValue === "" ? null : value;
+      }),
   });
+
   // Déclaration du gestionnaire du formulaire
+  const today = new Date();
   const defaultValues = {
     from: "",
     to: "",
-    dateDeparture: new Date(),
-    dateArrival: null,
+    dateDeparture: `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`,
+    dateArrival: "",
   };
 
   const {
@@ -31,10 +39,12 @@ function SearchFlightsForm() {
     getValues,
     watch,
     formState: { errors, isSubmitting },
+    setError, // configurer les erreurs serveurs
     handleSubmit,
   } = useForm({
     defaultValues: defaultValues,
     resolver: yupResolver(flightSchema),
+    criteriaMode: "all",
   });
 
   // Fonction pour gérer la soumission de formulaire
@@ -65,6 +75,14 @@ function SearchFlightsForm() {
               />
               <FlightSvg />
             </div>
+            {/** Affichages des erreurs multiples du champs de départ de vol */}
+            {errors?.from && (
+              <ul className="text-danger">
+                {Object.keys(errors.from.types).map((k) => (
+                  <li key={k}>{errors.from.types[k]}</li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="to" className="form-label">
@@ -80,6 +98,34 @@ function SearchFlightsForm() {
               />
               <FlightSvg />
             </div>
+            {/** Affichages des erreurs multiples du champs de départ de vol */}
+            {errors?.to && (
+              <ul className="text-danger">
+                {Object.keys(errors.to.types).map((k) => (
+                  <li key={k}>{errors.to.types[k]}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div className="col-12 col-md-6">
+            <label htmlFor="dateDeparture" className="form-label">
+              Date de départ
+            </label>
+            <input
+              {...register("dateDeparture")}
+              type="date"
+              // type="datetime-local"
+              id="dateDeparture"
+              className="form-control"
+            />
+            {/** Affichages des erreurs multiples du champs de départ de vol */}
+            {errors?.dateDeparture && (
+              <ul className="text-danger">
+                {Object.keys(errors.dateDeparture.types).map((k) => (
+                  <li key={k}>{errors.dateDeparture.types[k]}</li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="col-12 col-md-6">
             <label htmlFor="dateArrival" className="form-label">
@@ -87,21 +133,19 @@ function SearchFlightsForm() {
             </label>
             <input
               {...register("dateArrival")}
-              type="datetime-local"
+              type="date"
+              // type="datetime-local"
               id="dateArrival"
               className="form-control"
             />
-          </div>{" "}
-          <div className="col-12 col-md-6">
-            <label htmlFor="dateDeparture" className="form-label">
-              Date de départ
-            </label>
-            <input
-              {...register("dateDeparture")}
-              type="datetime-local"
-              id="dateDeparture"
-              className="form-control"
-            />
+            {/** Affichages des erreurs multiples du champs d'arrivée de vol */}
+            {errors?.dateArrival && (
+              <ul className="text-danger">
+                {Object.keys(errors.dateArrival.types).map((k) => (
+                  <li key={k}>{errors.dateArrival.types[k]}</li>
+                ))}
+              </ul>
+            )}
           </div>
           <button
             type="submit"

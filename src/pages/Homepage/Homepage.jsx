@@ -2,8 +2,11 @@ import SearchFlightsForm from "../../components/Forms/SearchFlightsForm";
 import styles from "../../assets/styles/pages/_home.module.scss";
 import airplane from "/src/assets/img/airplane.jpg";
 import { NavLink } from "react-router";
-import SellingPoint from "./components/SellingPoint";
-import { sellingPoints } from "../../assets/data/sellingpoints";
+import { sellingPoints as data } from "../../assets/data/sellingpoints";
+import SellingPointList from "./components/SellingPoints/SellingPointList";
+import DestinationsList from "./components/Destinations/DestinationsList";
+import PreFooterCallToAction from "../../components/PreFooterCallToAction/PreFooterCallToAction";
+import Footer from "../../components/Footer/Footer";
 
 function Homepage() {
   return (
@@ -18,7 +21,7 @@ function Homepage() {
         >
           <div className="d-flex flex-column h-100">
             <div>
-              <h3>
+              <h3 className="fs-3">
                 Voyagez vers vos{" "}
                 <span className="text-success">destinations</span> de rêve
               </h3>
@@ -59,22 +62,16 @@ function Homepage() {
 
       {/** Formulaire de recherche de vols */}
       <SearchFlightsForm />
+      <SellingPointList sellingPoints={data} />
 
-      {/** Les arguments commerciaux */}
-      <section className={`${styles.sectionSellingPoints} container mt-5`}>
-        {sellingPoints && (
-          <ul className="row">
-            {sellingPoints.map((s) => (
-              <li
-                key={s.title}
-                className={`${styles.sellingPointElement} col-12 col-md-6 col-lg-4 mb-4`}
-              >
-                <SellingPoint sellingPoint={s} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+      {/** La liste des destinations */}
+      <DestinationsList />
+
+      {/** Préfooter avec Call To Action  */}
+      <PreFooterCallToAction />
+
+      {/** Le footer */}
+      <Footer />
     </>
   );
 }

@@ -2,5 +2,33 @@
 @use '../utils//variables' as *;
 
 footer {
-    background-color: red;
+    background-color: black;
+    color: white;
+    a {
+        color: white;
+    }
+
+    form {
+        background-color: black;
+        label {
+            color: white;
+        }
+        .divInputPlusIconSearch {
+            position: relative;
+            button {
+                position: absolute;
+                right: 1px;
+                border: none;
+                height: 30px;
+                top: 2px;
+            }
+        }
+    }
+}
+
+.divLinksSupportAndEntreprise {
+    width: 100%;
+    @media screen and (width >= 768px) {
+        width: 60%;
+    }
 }
