@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "../../assets/styles/layouts/Header.module.scss";
 import { NavLink } from "react-router";
+import AuthContext from "../../context/AuthContext";
 
 function Header() {
+  // Récupérer l'utilisateur courant de l'app
+  const { currentUser, logout } = useContext(AuthContext);
+  console.log(currentUser);
+
   // Gérer les actifs du menu burger et du mobile
   const [isActive, setIsActive] = useState(false);
 
@@ -45,14 +50,29 @@ function Header() {
             <ul
               className={`d-flex flex-column flex-md-row justify-content-end gap-5 align-items-center`}
             >
-              <li>
-                <NavLink to="/inscription">S'inscrire</NavLink>
-              </li>
-              <li>
-                <NavLink to="/connexion" className="bg-secondary text-white">
-                  Se connecter
-                </NavLink>
-              </li>
+              {!currentUser && (
+                <li>
+                  <NavLink to="/inscription">S'inscrire</NavLink>
+                </li>
+              )}
+
+              {currentUser ? (
+                <li>
+                  <a
+                    onClick={() => logout()}
+                    type="button"
+                    className="bg-secondary text-white border-none"
+                  >
+                    Déconnexion
+                  </a>
+                </li>
+              ) : (
+                <li>
+                  <NavLink to="/connexion" className="bg-secondary text-white">
+                    Connexion
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </div>
 

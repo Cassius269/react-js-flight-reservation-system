@@ -1,14 +1,26 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import SearchFlights from "../pages/SearchFlights/SearchFlights";
-import Homepage from "../pages/Homepage/Homepage";
-import Signup from "../pages/Signup/Signup";
-import Signin from "../pages/Signin/Signin";
+import { lazy } from "react";
+import { getCurrentUser } from "../apis/auth";
 
+// Optimisation des routes du chargement differé des composants page
+const Signin = lazy(() => import("../pages/Signin/Signin"));
+
+const Signup = lazy(() => import("../pages/Signup/Signup"));
+
+const Homepage = lazy(() => import("../pages/Homepage/Homepage"));
+
+const SearchFlights = lazy(
+  () => import("../pages/SearchFlights/SearchFlights"),
+);
+
+// Le router
 export const ROUTER = createBrowserRouter([
   {
     path: "/", // url racine de l'APP
     Component: App,
+    loader: () => getCurrentUser(),
+    hydrateFallbackElement: <p>Chargement en cours</p>,
     children: [
       {
         index: true,

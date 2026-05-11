@@ -1,7 +1,15 @@
+import SigninForm from "./components/SigninForm";
+
 function Signin() {
   return (
     <>
-      <h1>Je suis la page de connexion</h1>
+      <section className="container mt-5">
+        <h1 className="text-center">Flight System Pro</h1>
+        <p className="text-center mb-5">
+          Se connecter pour aller d’un point à l’autre
+        </p>
+        <SigninForm />
+      </section>
     </>
   );
 }

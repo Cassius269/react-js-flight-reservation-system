@@ -5,8 +5,6 @@ import { NavLink } from "react-router";
 import { sellingPoints as data } from "../../assets/data/sellingpoints";
 import SellingPointList from "./components/SellingPoints/SellingPointList";
 import DestinationsList from "./components/Destinations/DestinationsList";
-import PreFooterCallToAction from "../../components/PreFooterCallToAction/PreFooterCallToAction";
-import Footer from "../../components/Footer/Footer";
 
 function Homepage() {
   return (
@@ -66,12 +64,6 @@ function Homepage() {
 
       {/** La liste des destinations */}
       <DestinationsList />
-
-      {/** Préfooter avec Call To Action  */}
-      <PreFooterCallToAction />
-
-      {/** Le footer */}
-      <Footer />
     </>
   );
 }

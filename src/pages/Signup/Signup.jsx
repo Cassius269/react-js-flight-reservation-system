@@ -1,7 +1,15 @@
+import SignupForm from "./components/SignupForm";
+
 function Signup() {
   return (
     <>
-      <h1>Je suis la page d'inscription</h1>
+      <section className="container mt-5">
+        <h1 className="text-center">Flight System Pro</h1>
+        <p className="text-center mb-5">
+          S’inscrire pour aller d’un point à l’autre
+        </p>
+        <SignupForm />
+      </section>
     </>
   );
 }

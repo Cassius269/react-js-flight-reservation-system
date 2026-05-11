@@ -11,7 +11,7 @@ function DestinationsList() {
         {destinations && (
           <ul className="row m-auto">
             {destinations.map((d) => (
-              <li className="col-12 col-md-6 col-lg-4 mb-4">
+              <li key={d.alias} className="col-12 col-md-6 col-lg-4 mb-4">
                 {<Destination destination={d} />}
               </li>
             ))}
