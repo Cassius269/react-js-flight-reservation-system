@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
-import styles from "../../assets/styles/layouts/Header.module.scss";
+import styles from "../../../assets/styles/layouts/Header.module.scss";
 import { NavLink } from "react-router";
 import AuthContext from "../../context/AuthContext";
 
-function Header() {
+function HeaderAuthentifiedUser() {
   // Récupérer l'utilisateur courant de l'app
   const { currentUser, logout } = useContext(AuthContext);
   console.log(currentUser);
@@ -88,4 +88,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderAuthentifiedUser;

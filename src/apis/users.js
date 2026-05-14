@@ -8,7 +8,7 @@ const createUser = async (newUser) =>{
                 'Content-Type': 'application/json'
             }, 
             body: JSON.stringify(newUser),
-            credentials: 'include'
+            credentials: 'include' // utiliser le token JWT pour s'authentifier dans la requête
         });
 
         const body = await response.json();

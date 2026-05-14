@@ -31,7 +31,7 @@ function Homepage() {
             </div>
 
             <div className="mt-auto d-flex justify-column justify-md-content-between flex-wrap gap-5 w-75">
-              <NavLink to="recherche-vols">
+              <NavLink to="search-flights">
                 <button
                   type="button"
                   className="btn btn-secondary text-white pe-5 ps-5"
