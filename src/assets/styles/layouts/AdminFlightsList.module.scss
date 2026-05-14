@@ -13,10 +13,12 @@ table {
             background-color: white;
             border-bottom: 2px solid $info ;
             td {
-                .btnViewFlight {
-                    margin-top: -0.7rem;
+                button {
+                    background-color: transparent;
+                    border: none;
                 }
             }
         } 
     }
 }
+

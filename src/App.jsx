@@ -8,11 +8,19 @@ import { Suspense } from "react";
 
 function App() {
   const location = useLocation();
-  console.log("hello", location);
+  // console.log("hello", location);
+
+  const isPathnameIncluded = [
+    "/",
+    "/signin",
+    "/search-flights",
+    "/register",
+  ].includes(location.pathname);
+
   return (
     <>
       <AuthProvider>
-        {location.pathname === "/" && <Header />}
+        {isPathnameIncluded && <Header />}
 
         <main>
           <Suspense>
@@ -22,10 +30,10 @@ function App() {
         </main>
 
         {/** Préfooter avec Call To Action  */}
-        {location.pathname === "/" && <PreFooterCallToAction />}
+        {isPathnameIncluded && <PreFooterCallToAction />}
 
         {/** Le footer */}
-        {location.pathname === "/" && <Footer />}
+        {isPathnameIncluded && <Footer />}
       </AuthProvider>
     </>
   );

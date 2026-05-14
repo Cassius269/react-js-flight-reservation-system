@@ -1,11 +1,10 @@
 import { createBrowserRouter, redirect } from "react-router";
 import App from "../App";
-import { lazy } from "react";
+import { lazy, useMemo } from "react";
 import { getCurrentUser } from "../apis/auth";
 import Admin from "../pages/Admin/pages/Admin";
 import AdminFlights from "../pages/Admin/pages/AdminFlights/AdminFlights";
 import AdminDetailFlight from "../pages/Admin/pages/AdminFlights/pages/AdminDetailFlight/AdminDetailFlight";
-import { getAllFlights } from "../apis/flights";
 import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
@@ -80,10 +79,7 @@ export const ROUTER = createBrowserRouter([
               },
               {
                 path: "list", // route par défaut de /admin qui deviendra /admin/flights/list
-                element: <AdminFlightsList />,
-                loader: async () => {
-                  return { flights: await getAllFlights() };
-                },
+                Component: AdminFlightsList,
               },
               {
                 path: "new",

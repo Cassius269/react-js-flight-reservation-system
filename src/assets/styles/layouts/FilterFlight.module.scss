@@ -1,7 +1,10 @@
 @use '../utils/variables' as *;
 
 ul {
-    button {
-        background-color: red !important;
+    li {
+ button {
+        border:none
     }
+    }
+   
 }

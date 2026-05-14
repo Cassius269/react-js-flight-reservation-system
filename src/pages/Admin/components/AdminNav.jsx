@@ -11,16 +11,19 @@ function AdminNav() {
 
   return (
     <>
-      <nav>
+      <nav className="bg-danger pe-md-5">
         <Button variant="" onClick={handleShow} className="pb-5 pe-3">
-          <i class="bi bi-list fs-2"></i>
+          <i className="bi bi-list fs-2"></i>
         </Button>
 
         <Offcanvas show={show} onHide={handleClose}>
           <Offcanvas.Header>
             <Offcanvas.Title className="m-auto">Menu</Offcanvas.Title>
             <button type="button" className="btn me-4">
-              <i onClick={handleClose} class="bi  bi-arrows-angle-contract"></i>
+              <i
+                onClick={handleClose}
+                className="bi  bi-arrows-angle-contract"
+              ></i>
             </button>
           </Offcanvas.Header>
           <Offcanvas.Body>
@@ -42,7 +45,7 @@ function AdminNav() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/">
+                <NavLink to="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16.88"
@@ -58,7 +61,7 @@ function AdminNav() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/">
+                <NavLink to="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -74,7 +77,7 @@ function AdminNav() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/">
+                <NavLink to="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -90,7 +93,7 @@ function AdminNav() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/">
+                <NavLink to="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -110,7 +113,7 @@ function AdminNav() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/">
+                <NavLink to="#">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

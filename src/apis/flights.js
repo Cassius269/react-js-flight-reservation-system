@@ -38,14 +38,14 @@ const getFlightById = async (idFlight) => {
 }
 
  // Méthode de récupération de tous les vols
-const getAllFlights = async () => {
-    const response = await fetch(API_FLIGHTS, {
+const getAllFlights = async (queryParams) => {
+    console.log('endpoint', `${API_FLIGHTS}${queryParams ? `?${queryParams}` : ''}`)
+    const response = await fetch(`${API_FLIGHTS}${queryParams ? `?${queryParams}` : ''}`, {
         method: 'GET',
         credentials: 'include'
     });
 
     const body = await response.json();
-
     if(response.ok){
         return body;
     }else {
@@ -82,12 +82,10 @@ const deleteFlight = async (idFlight) => {
         credentials: "include"
     });
 
-    const body = await response.json();
-
-    if(response.ok){
-        return body;
-    }else {
-        throw body;
+    if (response.ok) {
+        return idFlight;
+    } else {
+        throw new Error("Erreur suppression de vol");
     }
  } 
 

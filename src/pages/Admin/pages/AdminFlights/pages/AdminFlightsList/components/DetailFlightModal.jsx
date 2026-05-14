@@ -1,27 +1,30 @@
 import { Modal } from "react-bootstrap";
-import { useState } from "react";
-import { Button } from "react-bootstrap";
 
-function DetailFlightModal({ flight }) {
-  const [lgShow, setLgShow] = useState(false);
+function DetailFlightModal({ flight, show, onHide }) {
+  console.log("Données vol complètes", flight);
+  if (!flight) return null;
 
   return (
     <>
-      <Button onClick={() => setLgShow(true)}>Afficher le vol</Button>
       <Modal
         size="lg"
-        show={lgShow}
-        onHide={() => setLgShow(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
+        show={show}
+        onHide={onHide}
+        aria-labelledby="flight-detail-modal-title"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            <h2 className="text-warning">Page de détail d'un vol</h2>
+          <Modal.Title id="flight-detail-modal-title">
+            <h2 className="text-warning">Vol n°{flight.id}</h2>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <article>
-            <h3 className="text-primary">Vol numéro {flight.id}</h3>
+            <h2 className="text-primary">
+              Vol {flight.isDirect ? "direct" : "avec escale(s)"}{" "}
+              {flight.airplaneModel && flight.isDirect
+                ? `assuré par le modèle ${flight.airplaneModel}`
+                : ""}
+            </h2>
             <p>
               Le vol est géré par la compagnie <b>{flight.company}</b>
             </p>
