@@ -1,13 +1,13 @@
-const API_RESERVATIONS= '/api/reservations'; // utiliser le proxy Vite en développement pour le routage
+const API_AIRPLANES= '/api/airplanes'; // utiliser le proxy Vite en développement pour le routage
 
-// Méthode de création de nouveau vol
- const createReservation= async (newReservation) => {
-    const response = await fetch(API_RESERVATIONS, {
+// Méthode de création de nouvel avion
+ const createAirplane= async (newAirplane) => {
+    const response = await fetch(API_AIRPLANES, {
         method: 'POST',
         headers : {
             'Content-Type': 'application/json'
         },
-        body:JSON.stringify(newReservation),
+        body:JSON.stringify(newAirplane),
         credentials: 'include'
     });
 
@@ -21,9 +21,9 @@ const API_RESERVATIONS= '/api/reservations'; // utiliser le proxy Vite en dével
  }
 
 
- // Méthode de récupération d'un vol par son ID
-const getReservationById = async (idReservation) => {
-    const response = await fetch(`${API_RESERVATIONS}/${idReservation}`, {
+ // Méthode de récupération d'un avion par son ID
+const getAirplaneById = async (idAirplane) => {
+    const response = await fetch(`${API_AIRPLANES}/${idAirplane}`, {
         method: 'GET',
         credentials: 'include'
     });
@@ -37,9 +37,9 @@ const getReservationById = async (idReservation) => {
     }
 }
 
- // Méthode de récupération de tous les vols
-const getAllReservations = async () => {
-    const response = await fetch(API_RESERVATIONS, {
+ // Méthode de récupération de tous les avions
+const getAllAirplanes = async () => {
+    const response = await fetch(API_AIRPLANES, {
         method: 'GET',
         credentials: 'include'
     });
@@ -53,11 +53,11 @@ const getAllReservations = async () => {
     }
 }
 
- // Méthode de mise à jour de vol  
-const updateReservation = async (reservationToEdit) => {
-    const {id, ...payload} = reservationToEdit;
+ // Méthode de mise à jour d'avion  
+const updateAirplane = async (airplaneToEdit) => {
+    const {id, ...payload} = airplaneToEdit;
 
-    const response = await fetch(`${API_RESERVATIONS}/${reservationToEdit.id}`, {
+    const response = await fetch(`${API_AIRPLANES}/${airplaneToEdit.id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -75,9 +75,9 @@ const updateReservation = async (reservationToEdit) => {
     }
  } 
 
-  // Méthode de mise à jour de vol  
-const deleteReservation = async (idReservation) => {
-    const response = await fetch(`${API_RESERVATIONS}/${idReservation}`, {
+  // Méthode de mise à jour d'avion  
+const deleteAirplane = async (idAirplane) => {
+    const response = await fetch(`${API_AIRPLANES}/${idAirplane}`, {
         method: 'DELETE',
         credentials: "include"
     });
@@ -91,4 +91,4 @@ const deleteReservation = async (idReservation) => {
     }
  } 
 
-export {createReservation, getReservationById, getAllReservations, updateReservation, deleteReservation}
+export {createAirplane, getAirplaneById, getAllAirplanes, updateAirplane, deleteAirplane}

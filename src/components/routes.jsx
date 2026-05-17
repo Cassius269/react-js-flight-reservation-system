@@ -1,6 +1,6 @@
 import { createBrowserRouter, redirect } from "react-router";
 import App from "../App";
-import { lazy, useMemo } from "react";
+import { lazy } from "react";
 import { getCurrentUser } from "../apis/auth";
 import Admin from "../pages/Admin/pages/Admin";
 import AdminFlights from "../pages/Admin/pages/AdminFlights/AdminFlights";
@@ -57,7 +57,7 @@ export const ROUTER = createBrowserRouter([
         Component: Signin,
       },
       {
-        path: "/admin",
+        path: "admin",
         element: (
           <ProtectedRoute>
             <Admin />

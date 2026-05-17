@@ -1,13 +1,13 @@
-const API_RESERVATIONS= '/api/reservations'; // utiliser le proxy Vite en développement pour le routage
+const API_COMPANIES = '/api/companies'; // utiliser le proxy Vite en développement pour le routage
 
 // Méthode de création de nouveau vol
- const createReservation= async (newReservation) => {
-    const response = await fetch(API_RESERVATIONS, {
+ const createCompany= async (newCompany) => {
+    const response = await fetch(API_COMPANIES, {
         method: 'POST',
         headers : {
             'Content-Type': 'application/json'
         },
-        body:JSON.stringify(newReservation),
+        body:JSON.stringify(newCompany),
         credentials: 'include'
     });
 
@@ -22,8 +22,8 @@ const API_RESERVATIONS= '/api/reservations'; // utiliser le proxy Vite en dével
 
 
  // Méthode de récupération d'un vol par son ID
-const getReservationById = async (idReservation) => {
-    const response = await fetch(`${API_RESERVATIONS}/${idReservation}`, {
+const getCompanyById = async (idCompany) => {
+    const response = await fetch(`${API_COMPANIES}/${idCompany}`, {
         method: 'GET',
         credentials: 'include'
     });
@@ -38,14 +38,14 @@ const getReservationById = async (idReservation) => {
 }
 
  // Méthode de récupération de tous les vols
-const getAllReservations = async () => {
-    const response = await fetch(API_RESERVATIONS, {
+const getAllCompanies = async (queryParams) => {
+    console.log('endpoint', `${API_COMPANIES}${queryParams ? `?${queryParams}` : ''}`)
+    const response = await fetch(`${API_COMPANIES}${queryParams ? `?${queryParams}` : ''}`, {
         method: 'GET',
         credentials: 'include'
     });
 
     const body = await response.json();
-
     if(response.ok){
         return body;
     }else {
@@ -54,10 +54,10 @@ const getAllReservations = async () => {
 }
 
  // Méthode de mise à jour de vol  
-const updateReservation = async (reservationToEdit) => {
-    const {id, ...payload} = reservationToEdit;
+const updateCompany = async (flightToEdit) => {
+    const {id, ...payload} = flightToEdit;
 
-    const response = await fetch(`${API_RESERVATIONS}/${reservationToEdit.id}`, {
+    const response = await fetch(`${API_COMPANIES}/${flightToEdit.id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -76,19 +76,17 @@ const updateReservation = async (reservationToEdit) => {
  } 
 
   // Méthode de mise à jour de vol  
-const deleteReservation = async (idReservation) => {
-    const response = await fetch(`${API_RESERVATIONS}/${idReservation}`, {
+const deleteCompany = async (idCompany) => {
+    const response = await fetch(`${API_COMPANIES}/${idCompany}`, {
         method: 'DELETE',
         credentials: "include"
     });
 
-    const body = await response.json();
-
-    if(response.ok){
-        return body;
-    }else {
-        throw body;
+    if (response.ok) {
+        return idCompany;
+    } else {
+        throw new Error("Erreur suppression de vol");
     }
  } 
 
-export {createReservation, getReservationById, getAllReservations, updateReservation, deleteReservation}
+export {createCompany, getCompanyById, getAllCompanies, updateCompany, deleteCompany}

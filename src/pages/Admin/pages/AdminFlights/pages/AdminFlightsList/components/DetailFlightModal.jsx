@@ -30,11 +30,26 @@ function DetailFlightModal({ flight, show, onHide }) {
             </p>
             <p>
               Départ prévu à <b>{flight.airportDeparture.city.name} </b>le{" "}
-              {flight.dateDeparture}
+              {new Date(flight.dateDeparture).toLocaleString("fr-FR", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </p>
             <p>
               Arrivée à destination à <b>{flight.airportArrival.city.name}</b>{" "}
-              le {flight.dateArrival}
+              le{" "}
+              {new Date(flight.dateArrival).toLocaleString("fr-FR", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </p>
           </article>
         </Modal.Body>

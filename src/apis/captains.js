@@ -1,13 +1,13 @@
-const API_RESERVATIONS= '/api/reservations'; // utiliser le proxy Vite en développement pour le routage
+const API_CAPTAINS= '/api/captains'; // utiliser le proxy Vite en développement pour le routage
 
 // Méthode de création de nouveau vol
- const createReservation= async (newReservation) => {
-    const response = await fetch(API_RESERVATIONS, {
+ const createCaptain= async (newCaptain) => {
+    const response = await fetch(API_CAPTAINS, {
         method: 'POST',
         headers : {
             'Content-Type': 'application/json'
         },
-        body:JSON.stringify(newReservation),
+        body:JSON.stringify(newCaptain),
         credentials: 'include'
     });
 
@@ -22,8 +22,8 @@ const API_RESERVATIONS= '/api/reservations'; // utiliser le proxy Vite en dével
 
 
  // Méthode de récupération d'un vol par son ID
-const getReservationById = async (idReservation) => {
-    const response = await fetch(`${API_RESERVATIONS}/${idReservation}`, {
+const getCaptainById = async (idCaptain) => {
+    const response = await fetch(`${API_CAPTAINS}/${idCaptain}`, {
         method: 'GET',
         credentials: 'include'
     });
@@ -38,8 +38,8 @@ const getReservationById = async (idReservation) => {
 }
 
  // Méthode de récupération de tous les vols
-const getAllReservations = async () => {
-    const response = await fetch(API_RESERVATIONS, {
+const getAllCaptains = async () => {
+    const response = await fetch(API_CAPTAINS, {
         method: 'GET',
         credentials: 'include'
     });
@@ -54,10 +54,10 @@ const getAllReservations = async () => {
 }
 
  // Méthode de mise à jour de vol  
-const updateReservation = async (reservationToEdit) => {
-    const {id, ...payload} = reservationToEdit;
+const updateCaptain = async (captainToEdit) => {
+    const {id, ...payload} = captainToEdit;
 
-    const response = await fetch(`${API_RESERVATIONS}/${reservationToEdit.id}`, {
+    const response = await fetch(`${API_CAPTAINS}/${captainToEdit.id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -76,8 +76,8 @@ const updateReservation = async (reservationToEdit) => {
  } 
 
   // Méthode de mise à jour de vol  
-const deleteReservation = async (idReservation) => {
-    const response = await fetch(`${API_RESERVATIONS}/${idReservation}`, {
+const deleteCaptain = async (idCaptain) => {
+    const response = await fetch(`${API_CAPTAINS}/${idCaptain}`, {
         method: 'DELETE',
         credentials: "include"
     });
@@ -91,4 +91,4 @@ const deleteReservation = async (idReservation) => {
     }
  } 
 
-export {createReservation, getReservationById, getAllReservations, updateReservation, deleteReservation}
+export {createCaptain, getCaptainById, getAllCaptains, updateCaptain, deleteCaptain}

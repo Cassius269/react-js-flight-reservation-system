@@ -2,13 +2,58 @@ import { useForm } from "react-hook-form";
 import pilot from "../../../../../../assets/img/pilot.svg";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
+import {
+  getAllCaptains,
+  getCaptainById,
+} from "../../../../../../apis/captains";
+import {
+  getAllCompanies,
+  getCompanyById,
+} from "../../../../../../apis/companies";
+import {
+  getAirportById,
+  getAllAirports,
+} from "../../../../../../apis/airports";
+import {
+  getAirplaneById,
+  getAllAirplanes,
+} from "../../../../../../apis/airplanes";
+import { createFlight } from "../../../../../../apis/flights";
+import Toast from "../../../../../../components/Toast/Toast";
 
 function AdminFlightForm() {
-  // const captain = ;
-  // const companies = ;
-  // const airplanesForCompany = ;
-  // const airportArrivals =;
-  // const airportDeparture =;
+  // Gérer le message de succès
+  const [toastMessage, setToastMessage] = useState("");
+
+  // Gestion de l'état du composant de formulaire
+  const [captains, setCaptains] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [airports, setAirports] = useState([]);
+  const [airplanes, setAirplanes] = useState([]);
+
+  // const airplanesForCompany = async () => await getAllCompanies();
+
+  useEffect(() => {
+    const loadData = async () => {
+      const captainsData = await getAllCaptains();
+      const companiesData = await getAllCompanies();
+      const airportsData = await getAllAirports();
+      const airplanesData = await getAllAirplanes();
+
+      setCaptains(captainsData);
+      setCompanies(companiesData);
+      setAirports(airportsData);
+      setAirplanes(airplanesData);
+    };
+
+    loadData();
+  }, []);
+
+  console.log("Capitaines", captains);
+  console.log("Compagnies", companies);
+  console.log("aéroports", airports);
+  console.log("avions", airplanes);
 
   // Valider les données avec yup
   const flightSchema = yup.object({
@@ -29,13 +74,12 @@ function AdminFlightForm() {
     duration: yup
       .string()
       .nullable()
-      .matches(/^([01]\d|2[0-3]):[0-5]\d$/, "Format attendu : HH:mm")
       .required("La durée du vol est obligatoire"),
     price: yup
       .number()
       .typeError("Doit être un nombre")
       .required("Le prix est obligatoire")
-      .min(10, "Minimum 100 euros"),
+      .min(100, "Minimum 100 euros"),
   });
 
   // Gérer le formulaire
@@ -43,7 +87,7 @@ function AdminFlightForm() {
     company: "",
     airplane: "",
     dateDeparture: "",
-    dateArrival: "",
+    duration: "",
     captain: null,
     airportDeparture: "",
     airportArrival: "",
@@ -54,6 +98,8 @@ function AdminFlightForm() {
     register,
     watch,
     formState: { errors, isSubmitting },
+    setError, // configurer les erreurs serveurs
+    clearErrors, // nettoyer les erreurs avant chaque traitement de nouvelle soumission
     handleSubmit,
   } = useForm({
     defaultValues: defaultValues,
@@ -63,21 +109,71 @@ function AdminFlightForm() {
   });
 
   // Fonction de gestion de la soumission de formulaire
-  const submit = (values) => {
-    console.log(values);
+  const submit = async (values) => {
+    clearErrors();
+
+    // Convertir les dates de départ et d'arrivée en UTC
+    const dateDeparture = new Date(values.dateDeparture);
+    const dateArrival = new Date(
+      dateDeparture.getTime() + Number(values.duration) * 60 * 60 * 1000,
+    );
+
+    const payload = {
+      dateDeparture: dateDeparture.toISOString(),
+      dateArrival: dateArrival.toISOString(),
+      airportDeparture: {
+        name: (await getAirportById(values.airportDeparture)).name,
+        city: {
+          countryName: (await getAirportById(values.airportDeparture)).city
+            .countryName,
+        },
+      },
+      airportArrival: {
+        name: (await getAirportById(values.airportArrival)).name,
+        city: {
+          countryName: (await getAirportById(values.airportArrival)).city
+            .countryName,
+        },
+      },
+      price: Number(values.price), // transformer le prix en vrai nombre
+      company: {
+        name: (await getCompanyById(values.company)).name,
+      },
+      airplane: {
+        reference: (await getAirplaneById(values.airplane)).reference,
+      },
+      captain: {
+        email: (await getCaptainById(values.captain)).email,
+      },
+    };
+    console.log("payload", payload);
+
+    try {
+      const data = await createFlight(payload); // envoie d'un objet vol au server API
+
+      console.log("Réponse serveur", data);
+      // Afficher un message Toast de succès
+      setToastMessage("Vol créé avec succès");
+    } catch (error) {
+      setError("root.serverError", {
+        type: "server",
+        message: error.detail || error.description || "Erreur inconnue",
+      });
+    }
   };
 
   return (
     <>
       <section className="container-fluid">
-        <h2>Je suis la page de formulaire d'ajout de nouveau vol</h2>
+        {toastMessage && <Toast message={toastMessage} type="success" />}
+        <h2 className="p-5">Création de nouveau vol</h2>
         <form
           action="#"
           method="POST"
           onSubmit={handleSubmit(submit)}
           className="py-4 ps-4 bg-info row"
         >
-          <div className="bg-white py-4 ps-3 d-flex gap-2 flex-column col-12 col-md-6">
+          <div className="bg-white py-4 ps-3 d-flex gap-2 flex-column col-12 col-md-5">
             <h3>
               <i className="bi bi-airplane-fill me-2"></i>Compagnie
             </h3>
@@ -88,10 +184,15 @@ function AdminFlightForm() {
                 id="company"
                 className="form-select"
               >
-                {/** ici la liste des compagnies aériennes */}{" "}
-                <option value="airFrances">Air Frances</option>
-                <option value="easyJett">EasyJett</option>
-                <option value="airAustralle">Air Australle</option>
+                {/** ici la liste des compagnies aériennes */}
+                <option value="">
+                  ---- Sélectionner une compagnie aérienne ----
+                </option>
+                {companies.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
               </select>
               {errors?.company && (
                 <ul className="text-danger">
@@ -109,15 +210,13 @@ function AdminFlightForm() {
                 className="form-select"
               >
                 {/** ici la liste des avions d'une compagnie aérienne */}
-                <option value="rxgreg">
-                  Cessena Citation Longitude -rxgreg (Max: 100 sièges)
-                </option>
-                <option value="N2EFGV">
-                  Embraer Lineage 1000E - -N2EFGV (Max: 100 sièges)
-                </option>
-                <option value="FHFEZF">
-                  Gulf stream -FHFEZF (Max: 200 sièges)
-                </option>
+                <option value="">---- Sélectionner un avion ----</option>
+                {airplanes.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.reference} - {a.airplaneModel} (max: {a.model.capacity}
+                    {""} places)
+                  </option>
+                ))}
               </select>
               {errors?.airplane && (
                 <ul className="text-danger">
@@ -129,7 +228,7 @@ function AdminFlightForm() {
             </div>
             <div></div>
           </div>
-          <div className="mt-3 bg-white py-5 ps-3 d-flex gap-2 flex-column col-12 col-md-6">
+          <div className="mt-3 bg-white py-5 ps-3 d-flex gap-2 flex-column col-12 col-md-5">
             <h3>Pilote principal</h3>
             <div>
               <label htmlFor="captain">
@@ -148,9 +247,12 @@ function AdminFlightForm() {
                 className="form-select"
               >
                 {/** ici la liste des capitaines d'une compagnie aérienne */}
-                <option value="dupont">Jean Dupont</option>
-                <option value="durant">Jean Durand</option>
-                <option value="dow">Pierre Dow</option>
+                <option value="">---- Sélectionner un capitaine ----</option>
+                {captains.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.firstname} {c.lastname} ({c.email})
+                  </option>
+                ))}
               </select>
               {errors?.captain && (
                 <ul className="text-danger">
@@ -161,7 +263,7 @@ function AdminFlightForm() {
               )}
             </div>
           </div>
-          <div className="mt-3 bg-white py-4 ps-3 d-flex gap-2 flex-column col-12 col-md-6">
+          <div className="mt-3 bg-white py-4 ps-3 d-flex gap-2 flex-column col-12 col-md-5">
             <h3>
               <i className="bi bi-calendar-week-fill me-2"></i>Dates
             </h3>
@@ -189,7 +291,8 @@ function AdminFlightForm() {
               </label>
               <input
                 {...register("duration")}
-                type="time"
+                type="text"
+                inputMode="decimal"
                 id="duration"
                 className="form-control"
               />
@@ -202,7 +305,7 @@ function AdminFlightForm() {
               )}
             </div>
           </div>
-          <div className="mt-3 bg-white py-4 ps-3 d-flex gap-2 flex-column col-12 col-md-6">
+          <div className="mt-3 bg-white py-4 ps-3 d-flex gap-2 flex-column col-12 col-md-5">
             <h3>
               <i className="bi bi-map-fill me-2"></i>Itinéraires(aéroports)
             </h3>
@@ -214,9 +317,14 @@ function AdminFlightForm() {
                 className="form-select"
               >
                 {/** ici la liste des aéroports de départ */}
-                <option value="CDG">Aéroport Charles de Gaules</option>
-                <option value="HKG">Aéroport de Hong-Kong</option>
-                <option value="ATT">Aéroport de Tunis</option>
+                <option value="">
+                  ---- Sélectionner un aéroport de départ ----
+                </option>
+                {airports.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.name}
+                  </option>
+                ))}
               </select>
               {errors?.airportDeparture && (
                 <ul className="text-danger">
@@ -234,9 +342,14 @@ function AdminFlightForm() {
                 className="form-select"
               >
                 {/** ici la liste des aéroports d'arrivée */}
-                <option value="CDG">Aéroport Charles de Gaules</option>
-                <option value="HKG">Aéroport de Hong-Kong</option>
-                <option value="ATT">Aéroport de Tunis</option>
+                <option value="">
+                  ---- Sélectionner un aéroport d'arrivée ----
+                </option>
+                {airports.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.name}
+                  </option>
+                ))}
               </select>
               {errors?.airportArrival && (
                 <ul className="text-danger">
@@ -247,7 +360,8 @@ function AdminFlightForm() {
               )}
             </div>
           </div>
-          <div className="mt-3 bg-white py-3 py-4 d-flex gap-2 flex-column col-12 col-md-6">
+
+          <div className="bg-white py-4 d-flex gap-2 flex-column col-12 col-md-10">
             <h3>
               <i className="bi bi-currency-euro me-2"></i>Finance
             </h3>
@@ -257,7 +371,8 @@ function AdminFlightForm() {
               </label>
               <input
                 {...register("price")}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 id="price"
                 min={0}
                 className="form-control"
@@ -271,12 +386,21 @@ function AdminFlightForm() {
               )}
             </div>
           </div>
-          <button
-            type="submit"
-            className="btn btn-secondary text-white mt-5 d-block m-auto"
-          >
-            Soumettre
-          </button>
+          <div className="d-flex justify-content-center mt-4">
+            <button
+              type="submit"
+              className="btn btn-secondary text-white"
+              style={{ width: 100 }}
+              disabled={isSubmitting}
+            >
+              Soumettre
+            </button>
+          </div>
+          {errors?.root?.serverError && (
+            <p className="text-danger mt-5">
+              {errors?.root?.serverError.message}
+            </p>
+          )}
         </form>
       </section>
     </>
