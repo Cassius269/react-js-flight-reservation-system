@@ -1,13 +1,9 @@
-import { NavLink, Outlet, useSearchParams } from "react-router";
+import { Outlet, useSearchParams } from "react-router";
 import DetailFlightModal from "./components/DetailFlightModal";
 import { useState } from "react";
 import styles from "../../../../../../assets/styles/layouts/AdminFlightsList.module.scss";
 import FilterFlight from "./components/FilterFlight";
-import {
-  deleteFlight,
-  getAllFlights,
-  getFlightById,
-} from "../../../../../../apis/flights";
+import { deleteFlight, getFlightById } from "../../../../../../apis/flights";
 import useFetchFlights from "../../../../../../hooks/useFetchFlights";
 import Toast from "../../../../../../components/Toast/Toast";
 

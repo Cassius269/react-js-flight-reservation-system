@@ -164,7 +164,7 @@ function AdminFlightForm() {
 
   return (
     <>
-      <section className="container-fluid">
+      <section className="container-fluid vh-100">
         {toastMessage && <Toast message={toastMessage} type="success" />}
         <h2 className="p-5">Création de nouveau vol</h2>
         <form
