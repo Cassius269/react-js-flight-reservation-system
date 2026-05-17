@@ -11,7 +11,7 @@ function AdminNav() {
 
   return (
     <>
-      <nav className="bg-danger pe-md-5">
+      <nav className="pe-md-5">
         <Button variant="" onClick={handleShow} className="pb-5 pe-3">
           <i className="bi bi-list fs-2"></i>
         </Button>

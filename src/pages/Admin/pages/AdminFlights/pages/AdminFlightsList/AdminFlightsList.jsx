@@ -69,8 +69,8 @@ function AdminFlightsList() {
             <th>Route</th>
             <th>Départ</th>
             <th>Arrivée</th>
-            <th className="d-none  d-md-table-cell">Capitaine</th>
-            <th className="d-none  d-md-table-cell">Status</th>
+            <th className="d-none d-md-table-cell">Capitaine</th>
+            <th className="d-none d-md-table-cell">Status</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -84,7 +84,7 @@ function AdminFlightsList() {
               <td>{f.dateDeparture}</td>
               <td>{f.dateArrival}</td>
               <td className="d-none  d-md-table-cell">----</td>
-              <td className="d-none  d-md-table-cell">----</td>
+              <td className="d-none  d-md-table-cell">{f.status}</td>
               <td className="d-flex justify-content-start gap-2">
                 <button
                   onClick={(e) => handleClickView(e, f)}
