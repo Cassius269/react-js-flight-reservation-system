@@ -55,7 +55,28 @@ function Header() {
                   <NavLink to="/register">S'inscrire</NavLink>
                 </li>
               )}
-
+              {/** Lien vers l'espace admin */}
+              {currentUser.role === "ROLE_ADMIN" && (
+                <li>
+                  <NavLink
+                    to="admin"
+                    className="bg-white text-success border-none"
+                  >
+                    Espace Admin
+                  </NavLink>
+                </li>
+              )}
+              {/** Lien vers l'espace passager */}
+              {/* {currentUser.role === "ROLE_PASSENGER" && (
+                <li>
+                  <NavLink
+                    to="passengers"
+                    className="bg-white text-success border-none"
+                  >
+                    Espace passager
+                  </NavLink>
+                </li>
+              )} */}
               {currentUser ? (
                 <li>
                   <a
