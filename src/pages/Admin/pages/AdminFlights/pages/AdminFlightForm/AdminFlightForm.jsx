@@ -3,24 +3,19 @@ import pilot from "../../../../../../assets/img/pilot.svg";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import {
-  getAllCaptains,
-  getCaptainById,
-} from "../../../../../../apis/captains";
+
+import Toast from "../../../../../../components/Toast/Toast";
 import {
   getAllCompanies,
-  getCompanyById,
-} from "../../../../../../apis/companies";
-import {
-  getAirportById,
   getAllAirports,
-} from "../../../../../../apis/airports";
-import {
+  getAllCaptainsForACompany,
+  getAllAirplanesForACompany,
+  getAirportById,
+  getCompanyById,
   getAirplaneById,
-  getAllAirplanes,
-} from "../../../../../../apis/airplanes";
-import { createFlight } from "../../../../../../apis/flights";
-import Toast from "../../../../../../components/Toast/Toast";
+  createFlight,
+  getCaptainById,
+} from "../../../../../../apis";
 
 function AdminFlightForm() {
   // Gérer le message de succès
@@ -31,29 +26,6 @@ function AdminFlightForm() {
   const [companies, setCompanies] = useState([]);
   const [airports, setAirports] = useState([]);
   const [airplanes, setAirplanes] = useState([]);
-
-  // const airplanesForCompany = async () => await getAllCompanies();
-
-  useEffect(() => {
-    const loadData = async () => {
-      const captainsData = await getAllCaptains();
-      const companiesData = await getAllCompanies();
-      const airportsData = await getAllAirports();
-      const airplanesData = await getAllAirplanes();
-
-      setCaptains(captainsData);
-      setCompanies(companiesData);
-      setAirports(airportsData);
-      setAirplanes(airplanesData);
-    };
-
-    loadData();
-  }, []);
-
-  console.log("Capitaines", captains);
-  console.log("Compagnies", companies);
-  console.log("aéroports", airports);
-  console.log("avions", airplanes);
 
   // Valider les données avec yup
   const flightSchema = yup.object({
@@ -107,6 +79,39 @@ function AdminFlightForm() {
     mode: "onSubmit",
     criteriaMode: "all",
   });
+
+  // const airplanesForCompany = async () => await getAllCompanies();
+  const selectedCompany = watch("company"); // Watcher la valeur
+
+  useEffect(() => {
+    const loadData = async () => {
+      const companiesData = await getAllCompanies();
+      const airportsData = await getAllAirports();
+
+      setCompanies(companiesData);
+      setAirports(airportsData);
+      setAirplanes(airplanes);
+
+      if (selectedCompany) {
+        const dataCaptains = await getAllCaptainsForACompany(selectedCompany);
+        const dataAirplanes = await getAllAirplanesForACompany(selectedCompany);
+
+        console.log("captains de la compagnie", selectedCompany, dataCaptains);
+        setCaptains(dataCaptains.map((c) => c.captain));
+        setAirplanes(dataAirplanes);
+
+        console.log("CAPITAINES", captains);
+        console.log("AIRPLANES", airplanes);
+      }
+    };
+
+    loadData();
+  }, [selectedCompany]);
+
+  console.log("Capitaines", captains);
+  console.log("Compagnies", companies);
+  console.log("aéroports", airports);
+  console.log("avions", airplanes);
 
   // Fonction de gestion de la soumission de formulaire
   const submit = async (values) => {
@@ -213,7 +218,7 @@ function AdminFlightForm() {
                 <option value="">---- Sélectionner un avion ----</option>
                 {airplanes.map((a) => (
                   <option key={a.id} value={a.id}>
-                    {a.reference} - {a.airplaneModel} (max: {a.model.capacity}
+                    {a.reference} - {a.airplaneModel} (max: {a.model?.capacity}
                     {""} places)
                   </option>
                 ))}
@@ -269,7 +274,11 @@ function AdminFlightForm() {
             </h3>
             <div>
               <label htmlFor="dateDeparture" className="form-label">
-                Date de départ
+                Date de départ{" "}
+                <i className="text-danger">
+                  Attention la date sera transformée en date UTC, le navigateur
+                  étant en heure locale
+                </i>
               </label>
               <input
                 {...register("dateDeparture")}

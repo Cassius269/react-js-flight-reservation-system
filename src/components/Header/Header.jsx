@@ -56,7 +56,7 @@ function Header() {
                 </li>
               )}
               {/** Lien vers l'espace admin */}
-              {currentUser.role === "ROLE_ADMIN" && (
+              {currentUser?.role === "ROLE_ADMIN" && (
                 <li>
                   <NavLink
                     to="admin"
@@ -67,7 +67,7 @@ function Header() {
                 </li>
               )}
               {/** Lien vers l'espace passager */}
-              {/* {currentUser.role === "ROLE_PASSENGER" && (
+              {/* {currentUser?.role === "ROLE_PASSENGER" && (
                 <li>
                   <NavLink
                     to="passengers"

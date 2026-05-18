@@ -53,6 +53,39 @@ const getAllCompanies = async (queryParams) => {
     }
 }
 
+ // Méthode de récupération de tous les capitaines d'une compagnie
+const getAllCaptainsForACompany = async (idCompany) => {
+    const response = await fetch(`${API_COMPANIES}/${idCompany}/captains`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    const body = await response.json();
+
+    if(response.ok){
+        return body;
+    }else {
+        throw body;
+    }
+}
+
+
+ // Méthode de récupération de tous les capitaines d'une compagnie
+const getAllAirplanesForACompany = async (idCompany) => {
+    const response = await fetch(`${API_COMPANIES}/${idCompany}/airplanes`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    const body = await response.json();
+
+    if(response.ok){
+        return body;
+    }else {
+        throw body;
+    }
+}
+
  // Méthode de mise à jour de vol  
 const updateCompany = async (flightToEdit) => {
     const {id, ...payload} = flightToEdit;
@@ -89,4 +122,4 @@ const deleteCompany = async (idCompany) => {
     }
  } 
 
-export {createCompany, getCompanyById, getAllCompanies, updateCompany, deleteCompany}
+export {createCompany, getCompanyById, getAllCompanies, getAllCaptainsForACompany,getAllAirplanesForACompany, updateCompany, deleteCompany}
