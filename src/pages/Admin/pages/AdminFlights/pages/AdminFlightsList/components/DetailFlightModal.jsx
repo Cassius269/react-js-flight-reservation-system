@@ -26,7 +26,7 @@ function DetailFlightModal({ flight, show, onHide }) {
                 : ""}
             </h2>
             <p>
-              Le vol est géré par la compagnie <b>{flight.company}</b>
+              Le vol est géré par la compagnie <b>{flight.company.name}</b>
             </p>
             <p>
               Départ prévu à <b>{flight.airportDeparture.city.name} </b>le{" "}

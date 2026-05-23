@@ -1,4 +1,4 @@
-import { Outlet, useSearchParams } from "react-router";
+import { NavLink, Outlet, useSearchParams } from "react-router";
 import DetailFlightModal from "./components/DetailFlightModal";
 import { useState } from "react";
 import styles from "../../../../../../assets/styles/layouts/AdminFlightsList.module.scss";
@@ -92,9 +92,11 @@ function AdminFlightsList() {
                 <div hidden={true} className={styles.divFlightModal}>
                   <DetailFlightModal flight={f} />
                 </div>
-                <button>
-                  <i className="bi bi-pencil-square fs-4"></i>
-                </button>
+                <NavLink to={`/admin/flights/edit/${f.id}`}>
+                  <button>
+                    <i className="bi bi-pencil-square fs-4"></i>
+                  </button>
+                </NavLink>
                 <button onClick={() => handleClickDelete(f)}>
                   <i className="bi bi-trash3-fill text-danger fs-4 pointer-cursor"></i>
                 </button>

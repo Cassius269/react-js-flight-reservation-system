@@ -7,6 +7,8 @@ import AdminFlights from "../pages/Admin/pages/AdminFlights/AdminFlights";
 import AdminDetailFlight from "../pages/Admin/pages/AdminFlights/pages/AdminDetailFlight/AdminDetailFlight";
 import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import { getFlightById } from "../apis";
+import AdminFlightEdit from "../pages/Admin/pages/AdminFlights/pages/AdminFlightEdit/AdminFlightEdit";
 
 // Optimisation des routes du chargement differé des composants page
 const Signin = lazy(() => import("../pages/Signin/Signin"));
@@ -86,16 +88,17 @@ export const ROUTER = createBrowserRouter([
                 loader: () => ({ flight: null }), // renvoyer une donnée null en mode création,
                 Component: AdminFlightForm,
               },
-              {
-                path: "detail/12",
-                Component: AdminDetailFlight,
-              },
               // {
-              //   path: "edit/:flightId",
-              //   loader: async ({ params }) => {
-              //     //   return { flight: await getFlightById(params.flightId) };
-              //   },
+              //   path: "detail/12",
+              //   Component: AdminDetailFlight,
               // },
+              {
+                path: "edit/:flightId",
+                loader: async ({ params }) => {
+                  return { flight: await getFlightById(params.flightId) };
+                },
+                Component: AdminFlightEdit,
+              },
             ],
           },
         ],
