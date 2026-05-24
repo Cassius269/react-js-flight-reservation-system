@@ -79,7 +79,9 @@ function AdminFlightsList() {
               </td>
               <td>{f.dateDeparture}</td>
               <td>{f.dateArrival}</td>
-              <td className="d-none  d-md-table-cell">----</td>
+              <td className="d-none  d-md-table-cell">
+                {f.captain.firstname} {f.captain.lastname}
+              </td>
               <td className="d-none  d-md-table-cell">{f.status}</td>
               <td className="d-flex justify-content-start gap-2">
                 <button

@@ -44,9 +44,15 @@ function AdminFlightForm() {
       .transform((curr, orig) => (orig === "" ? null : curr))
       .required("La date de départ est obligatoire"),
     duration: yup
-      .string()
+      .number()
+      .typeError("Doit être un nombre")
       .nullable()
-      .required("La durée du vol est obligatoire"),
+      .required("La durée du vol est obligatoire")
+      .min(0.5, "Minimum une demi-heure de vol")
+      .max(24, "Maximum 24 heures de vol")
+      .transform((value, originalValue) =>
+        originalValue === "" ? null : value,
+      ),
     price: yup
       .number()
       .typeError("Doit être un nombre")
@@ -59,7 +65,7 @@ function AdminFlightForm() {
     company: "",
     airplane: "",
     dateDeparture: "",
-    duration: "",
+    duration: 0,
     captain: null,
     airportDeparture: "",
     airportArrival: "",
@@ -80,8 +86,7 @@ function AdminFlightForm() {
     criteriaMode: "all",
   });
 
-  // const airplanesForCompany = async () => await getAllCompanies();
-  const selectedCompany = watch("company"); // Watcher la valeur
+  const selectedCompany = watch("company"); // observer en temps réél la valeur sélectionnée
 
   useEffect(() => {
     const loadData = async () => {

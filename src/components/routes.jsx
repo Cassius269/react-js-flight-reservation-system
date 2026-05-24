@@ -97,6 +97,7 @@ export const ROUTER = createBrowserRouter([
                 loader: async ({ params }) => {
                   return { flight: await getFlightById(params.flightId) };
                 },
+
                 Component: AdminFlightEdit,
               },
             ],
