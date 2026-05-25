@@ -22,3 +22,15 @@ table {
     }
 }
 
+li button {
+    border: none;
+    font-size: 12px;
+    background-color: $info;
+    @media screen and (width >=768px) {
+        font-size: 14px;
+    }
+}
+
+// .active {
+//     background-color: white;
+// }

@@ -73,7 +73,7 @@ function AdminFlightsList() {
         <tbody>
           {flights.map((f) => (
             <tr key={f.id}>
-              <td className="d-none d-md-table-cell">N° {f.id}</td>
+              <td className="d-none d-md-table-cell ps-3">N° {f.id}</td>
               <td>
                 {f.airportDeparture.name}-{f.airportArrival.name}
               </td>
