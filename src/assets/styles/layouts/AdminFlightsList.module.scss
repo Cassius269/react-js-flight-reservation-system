@@ -2,6 +2,7 @@
 @use '../utils//variables' as *;
 
 table {
+    border: 1px solid black;
     thead {
         border-top: 2px solid black;
         background-color: $info;
@@ -30,7 +31,3 @@ li button {
         font-size: 14px;
     }
 }
-
-// .active {
-//     background-color: white;
-// }

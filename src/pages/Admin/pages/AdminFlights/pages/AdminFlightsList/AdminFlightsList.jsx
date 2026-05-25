@@ -109,10 +109,10 @@ function AdminFlightsList() {
       </table>
       <button
         type="button"
-        className="btn btn-primary text-white mt-3 mb-5  m-auto"
+        className="btn btn-white border border-dark-subtle text-dark mt-4 mt-md-5 mb-5  m-auto"
         onClick={() => setPage(page + 1)}
       >
-        Charger plus
+        Charger plus de vols
       </button>
 
       {selectedFlight && (

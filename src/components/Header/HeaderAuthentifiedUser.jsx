@@ -16,7 +16,7 @@ function HeaderAuthentifiedUser() {
         <div
           className={`${styles.divDropDown} d-flex justify-content-md-around justify-content-end gap-3`}
         >
-          <i className="bi bi-person-circle fs-1 cursor-pointer"></i>
+          <i className={`bi bi-person-circle fs-1 ${styles.iconeProfile}`}></i>
           <DropdownButton
             id="dropdown-basic-button"
             title={`${currentUser?.firstname} ${currentUser?.lastname}`}

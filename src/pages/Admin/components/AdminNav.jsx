@@ -12,7 +12,11 @@ function AdminNav() {
   return (
     <>
       <nav className="pe-md-5">
-        <Button variant="" onClick={handleShow} className="pb-5 pe-3">
+        <Button
+          variant=""
+          onClick={handleShow}
+          className="pb-5 pe-3 position-absolute"
+        >
           <i className="bi bi-list fs-2"></i>
         </Button>
 
