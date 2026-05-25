@@ -51,6 +51,19 @@ function DetailFlightModal({ flight, show, onHide }) {
                 minute: "2-digit",
               })}
             </p>
+            <i>
+              Vol crée le{" "}
+              <span className="text-danger">
+                {new Date(flight.createdAt).toLocaleString("fr-FR", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </i>
           </article>
         </Modal.Body>
       </Modal>

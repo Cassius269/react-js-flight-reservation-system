@@ -13,7 +13,7 @@ function FilterFlight({ onFilterChange }) {
 
   return (
     <>
-      <div className="d-flex flex-column flex-md-row justify-content-between">
+      <div className="d-flex flex-column flex-md-row justify-content-between ps-md-3">
         <div>
           <h3>Le vol</h3>
           <p>Gérez et consultez tous les vols</p>

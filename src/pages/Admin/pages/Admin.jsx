@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 import AdminNav from "../components/AdminNav";
+import HeaderAuthentifiedUser from "../../../components/Header/HeaderAuthentifiedUser";
 
 function Admin() {
   return (
@@ -8,6 +9,7 @@ function Admin() {
         <AdminNav />
         {/** Rendre les routes enfants d'AdminRecipes */}
         <div className="d-flex flex-column flex-grow-1 bg-dark-subtle">
+          <HeaderAuthentifiedUser />
           <Outlet />
         </div>
       </div>

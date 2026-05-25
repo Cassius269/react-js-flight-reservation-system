@@ -1,0 +1,6 @@
+.divDropDown {
+    width: 100%;
+    @media screen and (width>=768px) {
+        width: auto;
+    }
+}

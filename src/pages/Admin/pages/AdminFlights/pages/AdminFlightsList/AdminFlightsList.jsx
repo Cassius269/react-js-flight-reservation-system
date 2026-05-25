@@ -56,7 +56,7 @@ function AdminFlightsList() {
 
   return (
     <>
-      <h2>Gestion des vols</h2>
+      <h2 className="pt-3 ps-md-3">Gestion des vols</h2>
       <FilterFlight onFilterChange={onFilterChange} />
       <table>
         <thead>
