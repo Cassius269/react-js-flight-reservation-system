@@ -2,7 +2,7 @@ import SearchFlightsForm from "../../components/Forms/SearchFlightsForm";
 import styles from "../../assets/styles/pages/_home.module.scss";
 import airplane from "/src/assets/img/airplane.jpg";
 import { NavLink } from "react-router";
-import { sellingPoints as data } from "../../assets/data/sellingpoints";
+import { sellingPoints as data } from "../../assets/data/sellingPoints";
 import SellingPointList from "./components/SellingPoints/SellingPointList";
 import DestinationsList from "./components/Destinations/DestinationsList";
 
