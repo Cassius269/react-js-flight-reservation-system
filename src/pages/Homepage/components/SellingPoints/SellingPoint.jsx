@@ -1,4 +1,4 @@
-import styles from "../../../../assets/styles/layouts/sellingPoint.module.scss";
+import styles from "@/assets/styles/layouts/sellingPoint.module.scss";
 
 function SellingPoint({ sellingPoint, index }) {
   let backgroundColor = null;
