@@ -1,4 +1,4 @@
-import styles from "@/assets/styles/layouts/sellingPoint.module.scss";
+import styles from "@/assets/styles/layouts/SellingPoint.module.scss";
 import SellingPoint from "./SellingPoint";
 
 function SellingPointList({ sellingPoints }) {
